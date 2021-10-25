@@ -1,26 +1,23 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
+import './question.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 }
 
-class MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
 
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
-      questionIndex = Random().nextInt(5);
+      _questionIndex = Random().nextInt(5);
     });
     print("Answer Chosen");
   }
@@ -42,10 +39,10 @@ class MyAppState extends State<MyApp> {
         backgroundColor: (Colors.white),
         body: Column(
           children: [
-            Text(questions.elementAt(questionIndex)),
+            Question(questions.elementAt(_questionIndex)),
             RaisedButton(
               child: Text('Answer 1'),
-              onPressed: answerQuestion,
+              onPressed: _answerQuestion,
             ),
             RaisedButton(
               child: Text('Answer 2'),
