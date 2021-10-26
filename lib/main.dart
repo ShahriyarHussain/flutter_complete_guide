@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 import './quiz.dart';
@@ -89,6 +88,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Quizlet'),
+          backgroundColor: Colors.orange,
         ),
         backgroundColor: (Colors.white),
         body: _questionIndex < _questions.length
