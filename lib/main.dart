@@ -1,11 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import './question.dart';
+import './quiz.dart';
+import './result.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -13,47 +16,77 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var _questionIndex = 0;
+  final _questions = const [
+    {
+      "questionText": "Among the following People, who you prefer most?",
+      "answers": [
+        {"text": "Steve Jobs", "score": 10},
+        {"text": "Bill Gates", "score": 7},
+        {"text": "Sundar Pichai", "score": 3},
+        {"text": "Linus Torvalds", "score": 0}
+      ]
+    },
+    {
+      "questionText": "What does the word 'Open-Source' mean to you?",
+      "answers": [
+        {"text": "Insecure Software", "score": 10},
+        {"text": "Buggy Software", "score": 7},
+        {"text": "Free Software", "score": 3},
+        {"text": "Freedom of customization", "score": 0}
+      ]
+    },
+    {
+      "questionText": "Does you work involve Adobe Products?",
+      "answers": [
+        {"text": "Yes, a lot", "score": 10},
+        {"text": "Yes, but not a lot", "score": 7},
+        {"text": "Barely requires", "score": 3},
+        {"text": "Doesn't involve at all", "score": 0}
+      ]
+    },
+    {
+      "questionText":
+          "Are you concerned about privacy and data collection practices?",
+      "answers": [
+        {"text": "No, not at all", "score": 10},
+        {"text": "No if I get free products", "score": 7},
+        {"text": "Yes", "score": 3},
+        {"text": "Very concerned and take extreme measures", "score": 0}
+      ]
+    },
+    {
+      "questionText": "Do you like Apple products",
+      "answers": [
+        {"text": "Yes, I'm a fanboy", "score": 10},
+        {"text": "Yes, if it's in my capabilities", "score": 7},
+        {"text": "Only if the hardware is as good as the price", "score": 3},
+        {"text": "No", "score": 0}
+      ]
+    },
+  ];
 
-  void _answerQuestion() {
+  var _questionIndex = 0;
+  var _totalScore = 0;
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() {
-      _questionIndex = Random().nextInt(5);
+      _questionIndex += 1;
     });
-    print("Answer Chosen");
+    // print("Answer Chosen");
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      "What's you school?",
-      "What's your height?",
-      "What's your name?",
-      "What's your dogs name?",
-      "What's this app doing ?"
-    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('First App'),
+          title: const Text('Quizlet'),
         ),
         backgroundColor: (Colors.white),
-        body: Column(
-          children: [
-            Question(questions.elementAt(_questionIndex)),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: _answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: () => print("Answer 3"),
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () => print("Answer 2"),
-            )
-          ],
-        ),
+        body: _questionIndex < _questions.length
+            ? Quiz(_questions, _answerQuestion, _questionIndex)
+            : Result(_totalScore),
       ),
     );
   }
