@@ -5,15 +5,16 @@ class Answer extends StatelessWidget {
   final VoidCallback selectHandler;
   final String answerText;
 
-  Answer(this.selectHandler, this.answerText, {Key? key}) : super(key: key);
+  const Answer(this.selectHandler, this.answerText, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.maxFinite,
-      child: RaisedButton(
-        color: Colors.blue,
-        textColor: Colors.white,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: Colors.orange, onPrimary: Colors.white),
         child: Text(answerText),
         onPressed: selectHandler,
       ),
